@@ -4,6 +4,8 @@ package game;
  * @author hendrik
  *
  */
+import game.player;
+
 public class score_handler {
 	private static score_handler instance;
 	
@@ -15,6 +17,17 @@ public class score_handler {
 			instance = new score_handler();
 		}
 		return instance;
+	}
+	/**
+	 * update_score is used to update players scores.
+	 * @param 2 dimentional int array: [playerid][score]
+	 */
+	public void update_score(player id, int score){
+		id.setScore(score);
+	}
+	
+	public int get_score(player id){
+		return id.getScore();
 	}
 	
 }
