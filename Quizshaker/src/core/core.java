@@ -9,6 +9,7 @@ public class core {
 		// TODO Auto-generated method stub
 		System.out.println("hi");
 		System.out.println("test");
+		System.out.println("Hendricap lawl!");
 
 	}
 
