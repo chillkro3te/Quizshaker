@@ -8,6 +8,7 @@ public class core {
 	public static void main() {
 		// TODO Auto-generated method stub
 		System.out.println("hi");
+		System.out.println("test");
 
 	}
 
