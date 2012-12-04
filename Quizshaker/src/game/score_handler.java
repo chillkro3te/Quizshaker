@@ -20,12 +20,16 @@ public class score_handler {
 	}
 	/**
 	 * update_score is used to update players scores.
-	 * @param 2 dimentional int array: [playerid][score]
+	 * @param player object and score count
 	 */
 	public void update_score(player id, int score){
 		id.setScore(score);
 	}
-	
+	/**
+	 * Returns the score
+	 * @param id
+	 * @return int score
+	 */
 	public int get_score(player id){
 		return id.getScore();
 	}
