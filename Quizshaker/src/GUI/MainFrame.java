@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 
@@ -77,9 +80,18 @@ public class MainFrame extends JFrame {
 		/**Buttons*/
 		Dimension buttonDim = menuPane.getPreferredSize();
 		buttonDim.height = buttonDim.height/4;
+		
 		MenuButton play = new MenuButton("Play", buttonDim);
 		MenuButton settings = new MenuButton("Settings", buttonDim);
 		MenuButton exit = new MenuButton("Exit", buttonDim);
+		
+		play.getButton().addActionListener(this);
+		play.getButton().setActionCommand("play");
+		settings.getButton().addActionListener(this);
+		settings.getButton().setActionCommand("settings");
+		exit.getButton().addActionListener(this);
+		exit.getButton().setActionCommand("exit");
+		/***/
 		
 		menuPane.add(play.getPanel());
 		menuPane.add(settings.getPanel());
@@ -100,6 +112,20 @@ public class MainFrame extends JFrame {
 		profilePane.add(dummy);
 		
 		destPane.add(profilePane);
+	}
+
+	/**ActionListener, implement Functions in noted spots*/
+	public void actionPerformed(ActionEvent evt) {
+		if (evt.getActionCommand().equals("start")){
+			// TODO Add Gamestart-Function here
+		}
+		if (evt.getActionCommand().equals("settings")){
+			// TODO Add Settings-Function here
+		}
+		if (evt.getActionCommand().equals("exit")){
+			// TODO Add Exit-Function here, implemented is dummy so far
+			System.exit(0);
+		}
 	}
 
 }
