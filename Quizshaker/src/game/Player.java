@@ -5,14 +5,14 @@ package game;
  * @author hendrik
  *
  */
-public class player {
+public class Player {
 	
 		private int id;
 		private int score;
 		private String name; 
 		
 
-		public player(int id, String name){
+		public Player(int id, String name){
 			this.id = id;
 			this.score = 0;
 			this.name = name;

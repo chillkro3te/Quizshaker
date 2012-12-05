@@ -1,15 +1,20 @@
 package game;
 
-import game.player;
-import game.score_handler;
+import game.Player;
+import game.ScoreHandler;
+import game.Timer;
+import game.QuestionHandler;
 
-public class game_mode {
+public class GameMode {
 	
-	private static score_handler sh = score_handler.getInstance();
-	public static player[] players;
+	private static ScoreHandler sh = ScoreHandler.getInstance();
 	
-	public game_mode(player[] pl){
-		game_mode.players = pl;
+	public static Player[] players;
+	public Timer timer = new Timer();
+	public QuestionHandler qh = new QuestionHandler(); 
+	
+	public GameMode(Player[] pl){
+		GameMode.players = pl;
 	}
 	
 	/**

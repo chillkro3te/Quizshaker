@@ -4,17 +4,17 @@ package game;
  * @author hendrik
  *
  */
-import game.player;
+import game.Player;
 
-public class score_handler {
-	private static score_handler instance;
+public class ScoreHandler {
+	private static ScoreHandler instance;
 	
-	private score_handler() {
+	private ScoreHandler() {
 	}
 	
-	public synchronized static score_handler getInstance(){
+	public synchronized static ScoreHandler getInstance(){
 		if(instance == null){
-			instance = new score_handler();
+			instance = new ScoreHandler();
 		}
 		return instance;
 	}
@@ -22,7 +22,7 @@ public class score_handler {
 	 * update_score is used to update players scores.
 	 * @param player object and score count
 	 */
-	public void update_score(player id, int score){
+	public void update_score(Player id, int score){
 		id.setScore(score);
 	}
 	/**
@@ -30,7 +30,7 @@ public class score_handler {
 	 * @param id
 	 * @return int score
 	 */
-	public int getScore(player id){
+	public int getScore(Player id){
 		return id.getScore();
 	}
 	
