@@ -1,15 +1,15 @@
 package core;
 
+import GUI.StartGUI;
+
 public class core {
 
 	/**
 	 * core starting class
 	 */
-	public static void main() {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println("hi");
-		System.out.println("test");
-		System.out.println("Hendricap lawl!");
+		StartGUI.start();
 
 	}
 

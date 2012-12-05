@@ -18,20 +18,28 @@ public class game_mode {
 	 * @param p - Array of 'player'
 	 * @param scores Array of int
 	 */
-	final protected void after_round_update(player[] p, int[] scores){
-		for(int i = 0; i < p.length; i++) {
-			sh.update_score(p[i], scores[i]);
+	final protected void setPlayerScore(int[] scores){
+		for(int i = 0; i < players.length; i++) {
+			sh.update_score(players[i], scores[i]);
 		}
 	}
+	/**
+	 * get the current Player Score
+	 * @param i - id of the player
+	 * @return int - score of the player
+	 */
+	final public int getPlayerScore(int i){
+		return sh.getScore(players[i]);
+	}
 	
-	final public void startGamemodePerID(int id) {
+	final public void startGameModePerID(int id) {
 		
 		switch(id) {
 			case 1: {
 				
 			}
 			default: {
-				System.out.println("No Gamemode specified!");
+				System.out.println("No GameMode specified!");
 			}
 		}
 		//start game mode

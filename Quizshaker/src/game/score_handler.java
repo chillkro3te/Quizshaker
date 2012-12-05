@@ -30,7 +30,7 @@ public class score_handler {
 	 * @param id
 	 * @return int score
 	 */
-	public int get_score(player id){
+	public int getScore(player id){
 		return id.getScore();
 	}
 	
