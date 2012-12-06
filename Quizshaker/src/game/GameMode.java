@@ -41,7 +41,8 @@ public class GameMode {
 		
 		switch(id) {
 			case 1: {
-				
+				GameModeSimple gms = new GameModeSimple();
+				gms.start();
 			}
 			default: {
 				System.out.println("No GameMode specified!");

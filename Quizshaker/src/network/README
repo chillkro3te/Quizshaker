@@ -1,0 +1,13 @@
+Das Protokoll welches ich gern zur kommunikation nutzen würde:
+
+'befehl';id;'data'
+
+befehle wären bisher:
+
+connect	= zum verbindungsaufbau
+disconnect = zum verbindungsabbruch
+answer = antworten - in data wird dann die antwort kodiert.
+
+von Inputstream wird dann zeilenweise gelesen. Dadurch ergibt sich sogar automatisch eine 
+Möglichkeit die schnellste Antwort zubestimmen. :D Sonst werden einfach Antworten im richtigen
+Format gelesen bis der Buffer leer ist.
