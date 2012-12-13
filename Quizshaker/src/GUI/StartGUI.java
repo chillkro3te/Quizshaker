@@ -1,6 +1,8 @@
 package GUI;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 public class StartGUI {
 
@@ -23,7 +25,14 @@ public class StartGUI {
 													settings.getCenterY(),
 													settings.getResW(),
 													settings.getResH());
+					/**Vollbild-Modus*/
+					frame.setUndecorated(true);
+					frame.setLocationByPlatform(true);
+					Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+					frame.setBounds(0, 0, screenSize.width, screenSize.height);
 					frame.setResizable(false);
+					/***/
+					
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

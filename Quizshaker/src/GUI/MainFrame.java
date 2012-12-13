@@ -16,12 +16,23 @@ import javax.swing.border.EmptyBorder;
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements ActionListener {
 
+	/**Panels*/
 	private JPanel contentPane;
+	private JPanel titlePane = new JPanel();
+	private JPanel lowerPane = new JPanel();
+	private JPanel menuPane = new JPanel();
+	private JPanel profilePane = new JPanel();
+	private JPanel logInPane = new JPanel();
+	
+
+	
+	private boolean loggedIn;
 
 	/**
 	 * Creating the frame, starting-Coordinates and Dimension must be given.
 	 */
 	public MainFrame(int x, int y, int width, int height) {
+		setLoggedIn(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(x, y, width, height);
 		contentPane = new JPanel();
@@ -34,23 +45,20 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	public void mainScreen(){
 		contentPane.removeAll();
-		
 		getContentPane().setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-
 		
 		/**Title - will be reworked as soon a proper title-art is available.*/
-		JPanel titlePane = new JPanel();
 		title(titlePane);
 		/***/
 		
+		
 		/**"second, lower Part of mainScreen*/
-		JPanel lowerPane = new JPanel();
 		lowerPane.setLayout(new FlowLayout(FlowLayout.CENTER, contentPane.getWidth()/10, 0));
 		lowerPane.setBackground(null);
 		
 		/**adding Panels to lowerPane*/
-		mainMenu(lowerPane);
-		profilePane(lowerPane);
+		lowerPane.add(mainMenu());
+		lowerPane.add(logInPanel());
 		
 		contentPane.add(titlePane);
 		contentPane.add(lowerPane);
@@ -71,22 +79,24 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	
 	/**Initializing of Mainmenu to building it into given JPanel*/	
-	private void mainMenu(JPanel destPane){
-		JPanel menuPane = new JPanel();
+	private JPanel mainMenu(){
 		menuPane.setLayout(new BoxLayout(menuPane, BoxLayout.Y_AXIS));
 		menuPane.setBackground(null);
 		menuPane.setPreferredSize(new Dimension(contentPane.getWidth()/3*1,contentPane.getHeight()/3*2));
 		
 		/**Buttons*/
 		Dimension buttonDim = menuPane.getPreferredSize();
-		buttonDim.height = buttonDim.height/4;
+		buttonDim.height = buttonDim.height/6;
 		
 		MenuButton play = new MenuButton("Play", buttonDim);
+		MenuButton createQ = new MenuButton("Create Question", buttonDim);
 		MenuButton settings = new MenuButton("Settings", buttonDim);
 		MenuButton exit = new MenuButton("Exit", buttonDim);
 		
 		play.getButton().addActionListener(this);
 		play.getButton().setActionCommand("play");
+		createQ.getButton().addActionListener(this);
+		createQ.getButton().setActionCommand("createQ");
 		settings.getButton().addActionListener(this);
 		settings.getButton().setActionCommand("settings");
 		exit.getButton().addActionListener(this);
@@ -94,30 +104,70 @@ public class MainFrame extends JFrame implements ActionListener {
 		/***/
 		
 		menuPane.add(play.getPanel());
+		menuPane.add(createQ.getPanel());
 		menuPane.add(settings.getPanel());
 		menuPane.add(exit.getPanel());
 		
-		destPane.add(menuPane);
+		return menuPane;
 	}
 	
 	/**Initializing of Profile to building it into given JPanel*/	
-	private void profilePane(JPanel destPane){
-		JPanel profilePane = new JPanel();
-		
+	private JPanel profilePanel(){
 		profilePane.setLayout(new BoxLayout(profilePane, BoxLayout.Y_AXIS));
-		profilePane.setBackground(Color.WHITE);
-		profilePane.setPreferredSize(new Dimension(contentPane.getWidth()/3*1,contentPane.getHeight()/3*2-10));
+		profilePane.setBackground(null);
+		profilePane.setPreferredSize(logInPane.getPreferredSize());
+		Dimension buttonDim = profilePane.getPreferredSize();
+		buttonDim.height = buttonDim.height/6;
 		
+		/**Case: Profile is loggedIn*/
+		JPanel profile = new JPanel();
+		Dimension profileDim = profilePane.getPreferredSize();
+		profileDim.height = profileDim.height/3*2;
+		profile.setPreferredSize(profileDim);
 		JLabel dummy = new JLabel("PLAYER_PROFILE");
-		profilePane.add(dummy);
+		profile.add(dummy);
 		
-		destPane.add(profilePane);
+		MenuButton logout = new MenuButton("Logout", buttonDim);
+		logout.getButton().addActionListener(this);
+		logout.getButton().setActionCommand("logout");
+		
+		profilePane.add(profile);
+		profilePane.add(logout.getPanel());
+			
+		return profilePane;
+	}
+	
+	private JPanel logInPanel(){
+		logInPane.setLayout(new BoxLayout(logInPane, BoxLayout.Y_AXIS));
+		logInPane.setBackground(null);
+		logInPane.setPreferredSize(new Dimension(contentPane.getWidth()/3*1,contentPane.getHeight()/3*2));
+		Dimension buttonDim = logInPane.getPreferredSize();
+		buttonDim.height = buttonDim.height/6;
+		
+		/**Case: NO profile is loggedIn*/
+		
+		MenuButton login = new MenuButton("Login", buttonDim);
+		login.getButton().addActionListener(this);
+		login.getButton().setActionCommand("login");
+		
+		MenuButton createP = new MenuButton("Create Profile", buttonDim);
+		createP.getButton().addActionListener(this);
+		createP.getButton().setActionCommand("createP");
+		
+		login.getPanel().add(createP.getButton());
+		logInPane.add(login.getPanel());
+		
+		return logInPane;
 	}
 
 	/**ActionListener, implement Functions in noted spots*/
 	public void actionPerformed(ActionEvent evt) {
+		/**Mainmenu-Buttons*/
 		if (evt.getActionCommand().equals("start")){
 			// TODO Add Gamestart-Function here
+		}
+		if (evt.getActionCommand().equals("createQ")){
+			// TODO Add Create-Function here
 		}
 		if (evt.getActionCommand().equals("settings")){
 			// TODO Add Settings-Function here
@@ -126,6 +176,31 @@ public class MainFrame extends JFrame implements ActionListener {
 			// TODO Add Exit-Function here, implemented is dummy so far
 			System.exit(0);
 		}
+		/**Profile-Buttons*/
+		if (evt.getActionCommand().equals("logout")){
+			// TODO Add Logout-Function here
+			setLoggedIn(false);
+			
+		}
+		if (evt.getActionCommand().equals("login")){
+			// TODO Add Login-Function here
+			setLoggedIn(true);
+			lowerPane.remove(logInPane);
+			lowerPane.add(profilePanel());
+			profilePane.repaint();
+			lowerPane.repaint();
+		}
+		if (evt.getActionCommand().equals("createP")){
+			// TODO Add Exit-Function here, implemented is dummy so far
+		}
+	}
+
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
+
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
 	}
 
 }
