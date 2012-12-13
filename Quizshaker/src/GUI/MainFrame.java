@@ -113,6 +113,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	/**Initializing of Profile to building it into given JPanel*/	
 	private JPanel profilePanel(){
+		profilePane.removeAll();
 		profilePane.setLayout(new BoxLayout(profilePane, BoxLayout.Y_AXIS));
 		profilePane.setBackground(null);
 		profilePane.setPreferredSize(logInPane.getPreferredSize());
@@ -138,6 +139,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 	
 	private JPanel logInPanel(){
+		logInPane.removeAll();
 		logInPane.setLayout(new BoxLayout(logInPane, BoxLayout.Y_AXIS));
 		logInPane.setBackground(null);
 		logInPane.setPreferredSize(new Dimension(contentPane.getWidth()/3*1,contentPane.getHeight()/3*2));
@@ -180,14 +182,17 @@ public class MainFrame extends JFrame implements ActionListener {
 		if (evt.getActionCommand().equals("logout")){
 			// TODO Add Logout-Function here
 			setLoggedIn(false);
-			
+			lowerPane.remove(profilePane);
+			lowerPane.add(logInPanel());
+			lowerPane.validate();
+			lowerPane.repaint();	
 		}
 		if (evt.getActionCommand().equals("login")){
 			// TODO Add Login-Function here
 			setLoggedIn(true);
 			lowerPane.remove(logInPane);
 			lowerPane.add(profilePanel());
-			profilePane.repaint();
+			lowerPane.validate();
 			lowerPane.repaint();
 		}
 		if (evt.getActionCommand().equals("createP")){

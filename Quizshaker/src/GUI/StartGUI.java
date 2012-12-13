@@ -16,8 +16,15 @@ public class StartGUI {
 //		final GuiSettingsDummy settings = new GuiSettingsDummy();
 		settings.setCenterX(0);
 		settings.setCenterY(0);
+		settings.setFullscreen(true);
+		if(settings.isFullscreen()){
+			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+			settings.setResW(screenSize.width);
+			settings.setResH(screenSize.height);
+		}else{
 		settings.setResW(1024);
 		settings.setResH(768);
+		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -25,13 +32,10 @@ public class StartGUI {
 													settings.getCenterY(),
 													settings.getResW(),
 													settings.getResH());
-					/**Vollbild-Modus*/
-					frame.setUndecorated(true);
-					frame.setLocationByPlatform(true);
-					Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-					frame.setBounds(0, 0, screenSize.width, screenSize.height);
-					frame.setResizable(false);
-					/***/
+					
+					if(settings.isFullscreen())
+						frame.setUndecorated(true);
+					
 					
 					frame.setVisible(true);
 				} catch (Exception e) {
