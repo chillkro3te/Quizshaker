@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,8 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class MainMenu extends JPanel implements ActionListener{
 
@@ -18,8 +24,10 @@ public class MainMenu extends JPanel implements ActionListener{
 	private JPanel titlePane = new JPanel();
 	private JPanel lowerPane = new JPanel();
 	private JPanel menuPane = new JPanel();
-	private JPanel profilePane = new JPanel();
-	private JPanel logInPane = new JPanel();
+	private JPanel clientPane = new JPanel();
+	
+	String[][] testList = {{"Hendrik","1336"},{"Micha","1337"},{"Tony","1338"}};
+	
 
 	public MainMenu(JPanel destPane){
 		setBackground(null);
@@ -43,7 +51,7 @@ public class MainMenu extends JPanel implements ActionListener{
 		
 		/**adding Panels to lowerPane*/
 		lowerPane.add(mainMenu());
-		lowerPane.add(logInPanel());
+		lowerPane.add(clientPanel(testList));
 		
 		add(titlePane);
 		add(lowerPane);
@@ -68,7 +76,7 @@ public class MainMenu extends JPanel implements ActionListener{
 	private JPanel mainMenu(){
 		menuPane.setLayout(new BoxLayout(menuPane, BoxLayout.Y_AXIS));
 		menuPane.setBackground(null);
-		menuPane.setPreferredSize(new Dimension(getWidth()/3*1,getHeight()/3*2));
+		menuPane.setPreferredSize(new Dimension(getWidth()/3*1,getHeight()/3*2-100));
 		
 		/**Buttons*/
 		Dimension buttonDim = menuPane.getPreferredSize();
@@ -97,57 +105,35 @@ public class MainMenu extends JPanel implements ActionListener{
 		return menuPane;
 	}
 	
-	/**Initializing of Profile to building it into given JPanel*/	
-	private JPanel profilePanel(){
-		profilePane.removeAll();
-		profilePane.setLayout(new BoxLayout(profilePane, BoxLayout.Y_AXIS));
-		profilePane.setBackground(null);
-		profilePane.setPreferredSize(logInPane.getPreferredSize());
-		Dimension buttonDim = profilePane.getPreferredSize();
-		buttonDim.height = buttonDim.height/6;
+	private JPanel clientPanel(String[][] clientList){
+		clientPane.removeAll();
+		clientPane.setLayout(new BoxLayout(clientPane, BoxLayout.Y_AXIS));
+		clientPane.setBackground(null);
+		clientPane.setPreferredSize(menuPane.getPreferredSize());
 		
-		/**Case: Profile is loggedIn*/
-		JPanel profile = new JPanel();
-		Dimension profileDim = profilePane.getPreferredSize();
-		profileDim.height = profileDim.height/3*2;
-		profile.setPreferredSize(profileDim);
-		JLabel dummy = new JLabel("PLAYER_PROFILE");
-		profile.add(dummy);
+
+		String[] tableColumns = {"name", "ip"};
+
+		JTable clientTable = new JTable(clientList, tableColumns);
 		
-		MenuButton logout = new MenuButton("Logout", buttonDim);
-		logout.getButton().addActionListener(this);
-		logout.getButton().setActionCommand("logout");
+		JScrollPane tablePane = new JScrollPane(clientTable);
+		tablePane.setPreferredSize(new Dimension((int)clientPane.getPreferredSize().getWidth(),
+				  								 (int)clientPane.getPreferredSize().getHeight()/8*7));
 		
-		profilePane.add(profile);
-		profilePane.add(logout.getPanel());
-			
-		return profilePane;
+		clientPane.add(tablePane);
+		
+		MenuButton kick = new MenuButton("Kick Client", new Dimension((int)clientPane.getPreferredSize().getWidth(),
+																	  (int)clientPane.getPreferredSize().getHeight()/8));
+		
+		kick.getButton().addActionListener(this);
+		kick.getButton().setActionCommand("kick");
+		
+		clientPane.add(kick.getPanel());
+		
+		return clientPane;
 	}
 	
-	private JPanel logInPanel(){
-		logInPane.removeAll();
-		logInPane.setLayout(new BoxLayout(logInPane, BoxLayout.Y_AXIS));
-		logInPane.setBackground(null);
-		logInPane.setPreferredSize(new Dimension(getWidth()/3*1,getHeight()/3*2));
-		Dimension buttonDim = logInPane.getPreferredSize();
-		buttonDim.height = buttonDim.height/6;
-		
-		/**Case: NO profile is loggedIn*/
-		
-		MenuButton login = new MenuButton("Login", buttonDim);
-		login.getButton().addActionListener(this);
-		login.getButton().setActionCommand("login");
-		
-		MenuButton createP = new MenuButton("Create Profile", buttonDim);
-		createP.getButton().addActionListener(this);
-		createP.getButton().setActionCommand("createP");
-		
-		login.getPanel().add(createP.getButton());
-		logInPane.add(login.getPanel());
-		
-		return logInPane;
-	}
-
+	
 	/**ActionListener, implement Functions in noted spots*/
 	public void actionPerformed(ActionEvent evt) {
 		/**Mainmenu-Buttons*/
@@ -164,23 +150,9 @@ public class MainMenu extends JPanel implements ActionListener{
 			// TODO Add Exit-Function here, implemented is dummy so far
 			System.exit(0);
 		}
-		/**Profile-Buttons*/
-		if (evt.getActionCommand().equals("logout")){
-			// TODO Add Logout-Function here
-			lowerPane.remove(profilePane);
-			lowerPane.add(logInPanel());
-			lowerPane.validate();
-			lowerPane.repaint();	
-		}
-		if (evt.getActionCommand().equals("login")){
-			// TODO Add Login-Function here
-			lowerPane.remove(logInPane);
-			lowerPane.add(profilePanel());
-			lowerPane.validate();
-			lowerPane.repaint();
-		}
-		if (evt.getActionCommand().equals("createP")){
-			// TODO Add Exit-Function here, implemented is dummy so far
+		
+		if (evt.getActionCommand().equals("kick")){
+			// TODO Add Settings-Function here
 		}
 	}
 

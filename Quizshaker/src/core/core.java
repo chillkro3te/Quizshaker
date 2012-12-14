@@ -1,6 +1,6 @@
 package core;
 
-import GUI.StartGUI;
+import gui.StartGUI;
 
 public class core {
 
